@@ -21,7 +21,7 @@ describe("ProductAdmFacadeFactory test", () => {
     await sequelize.close();
   });
 
-  it("should create a product", async () => {    
+  it("should check product stock", async () => {    
     const productFacade = ProductAdmFacadeFactory.create();
 
     const input = {
@@ -34,11 +34,9 @@ describe("ProductAdmFacadeFactory test", () => {
 
     await productFacade.addProduct(input);
 
-    const product = await ProductModel.findOne({ where: { id: "1" } });
-    expect(product.id).toBeDefined();
-    expect(product.name).toEqual(input.name);
-    expect(product.description).toEqual(input.description);
-    expect(product.purchasePrice).toEqual(input.purchasePrice);
-    expect(product.stock).toEqual(input.stock);
+    const result = await productFacade.checkStock({ productId: "1" });
+
+    expect(result.productId).toBe(input.id);
+    expect(result.stock).toEqual(input.stock);
   });
 });
