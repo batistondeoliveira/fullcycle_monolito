@@ -11,7 +11,7 @@ type TransactionProps = {
   updatedAt?: Date;
 };
 
-export default class Transactoin extends BaseEntity implements AggregateRoot {
+export default class Transaction extends BaseEntity implements AggregateRoot {
   private _amount: number;
   private _orderId: string;
   private _status: string;
