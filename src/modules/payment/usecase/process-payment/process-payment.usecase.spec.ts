@@ -59,11 +59,11 @@ describe("Process payment usecase unit test", () => {
     const result = await usecase.execute(input);
 
     expect(paymentRepository.save).toHaveBeenCalled();
-    expect(result.transactionId).toBe(transaction.id.id);    
+    expect(result.transactionId).toBe(transaction2.id.id);    
     expect(result.status).toBe("declined");
     expect(result.amount).toBe(50);
     expect(result.orderId).toBe("1");
-    expect(result.createdAt).toStrictEqual(transaction.createdAt);
-    expect(result.updatedAt).toStrictEqual(transaction.updatedAt);
+    expect(result.createdAt).toStrictEqual(transaction2.createdAt);
+    expect(result.updatedAt).toStrictEqual(transaction2.updatedAt);
   });
 });
