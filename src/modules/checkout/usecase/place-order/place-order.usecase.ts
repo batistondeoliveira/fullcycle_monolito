@@ -1,11 +1,20 @@
 import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
+import ClientAdmFacadeInterface from "../../../client-adm/facade/client-adm.facade.interface";
 import { PlaceOrderInputDto, PlaceOrderOutputDto } from "./place-order.dto";
 
 export default class PlaceOrderUseCase implements UseCaseInterface {
-  constructor() {}
+  private _clientFacade: ClientAdmFacadeInterface;
+
+  constructor(clientFacade: ClientAdmFacadeInterface) {
+    this._clientFacade = clientFacade;
+  }
 
   async execute(input: PlaceOrderInputDto): Promise<PlaceOrderOutputDto> {
-    //buscar o cliente. Caso não encontre -> client not found
+    const client = await this._clientFacade.find({ id: input.clientId });
+    if (!client) {
+      throw new Error("Client not found");
+    }
+    
     //validar produto
     //recuperar os produtos
 
@@ -15,7 +24,7 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
     //processpayment -> paymentfacade.process (orderid, amount)
     //mudar o status da minha order para approved
     //retornar dto
-    
+
     return {
       id: "",
       invoiceId: "",
