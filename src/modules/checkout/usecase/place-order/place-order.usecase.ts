@@ -15,7 +15,7 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
       throw new Error("Client not found");
     }
     
-    //validar produto
+    //validar produto. //funcao a parte
     //recuperar os produtos
 
     //criar o objeto do client
