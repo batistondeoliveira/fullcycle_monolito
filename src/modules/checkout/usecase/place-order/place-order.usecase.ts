@@ -3,6 +3,8 @@ import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
 import ClientAdmFacadeInterface from "../../../client-adm/facade/client-adm.facade.interface";
 import ProductAdmFacadeInterface from "../../../product-adm/facade/product-adm.facade.interface";
 import StoreCatalogFacadeInterface from "../../../store-catalog/facade/store-catalog.facade.interface";
+import Client from "../../domain/client.entity";
+import Order from "../../domain/order.entity";
 import Product from "../../domain/product.entity";
 import { PlaceOrderInputDto, PlaceOrderOutputDto } from "./place-order.dto";
 
@@ -28,10 +30,22 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
     }
     
     await this.validateProducts(input);
-    //recuperar os produtos
+    
+    const products = await Promise.all(
+      input.products.map((p) => this.getProduct(p.productId))
+    );
 
-    //criar o objeto do client
-    //criar o objeto da order(client, products)
+    const myClient = new Client({
+      id: new Id(client.id),
+      name: client.name,
+      email: client.email,
+      address: client.address,
+    });
+
+    const order = new Order({
+      client: myClient,
+      products,
+    });
 
     //processpayment -> paymentfacade.process (orderid, amount)
     //mudar o status da minha order para approved
