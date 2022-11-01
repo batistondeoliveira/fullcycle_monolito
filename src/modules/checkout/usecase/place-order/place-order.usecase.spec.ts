@@ -99,15 +99,12 @@ describe("PlaceOrderUseCase unit test", () => {
       };
       //@ts-expect-error - force set catalogFacade
       placeOrderUseCase["_catalogFacade"] = mockCatalogFacade;
+      const placeOrder = await placeOrderUseCase["getProduct"]("0");
 
-      await expect(placeOrderUseCase["getProduct"]("0")).resolves.toEqual(
-        new Product({
-          id: new Id("0"),
-          name: "Product 0",
-          description: "Product 0 description",
-          salesPrice: 0,
-        })
-      );
+      expect(placeOrder.id.id).toBe("0")
+      expect(placeOrder.name).toBe("Product 0")
+      expect(placeOrder.description).toBe("Product 0 description")
+      expect(placeOrder.salesPrice).toBe(0)        
       expect(mockCatalogFacade.find).toHaveBeenCalledTimes(1);
     });
   });
