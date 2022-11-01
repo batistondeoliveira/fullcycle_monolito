@@ -269,6 +269,8 @@ describe("PlaceOrderUseCase unit test", () => {
         });
         expect(mockInvoiceFacade.generate).toHaveBeenCalledTimes(0);
       });
+
+      
     });
   });
 });
