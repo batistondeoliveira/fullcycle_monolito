@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
+import Address from "../../@shared/domain/value-object/address.value-object";
 import { ClientModel } from "../repository/client.model";
 import ClientAdmFacadeFactory from "./client-adm.facade.factory";
 
@@ -21,14 +22,22 @@ describe("ClientRepository test", () => {
     await sequelize.close();
   });
 
-  it("should create a clien", async () => {
+  it("should create a client", async () => {
     const facade = ClientAdmFacadeFactory.create();
  
     const input = {
       id: "1",
       name: "Client 1",
       email: "x@x.com",
-      address: "Address 1",
+      document: "Doc-1",
+      address: new Address({
+        street: "Street 1",
+        number: "Number 1",
+        complement: "Complement 1",
+        city: "City 1",
+        state: "State 1",
+        zipCode: "Zip 1",
+      }),
     };
 
     await facade.add(input)
@@ -39,7 +48,13 @@ describe("ClientRepository test", () => {
     expect(client.id).toEqual(input.id);
     expect(client.name).toEqual(input.name);
     expect(client.email).toEqual(input.email);    
-    expect(client.address).toEqual(input.address);
+    expect(client.document).toEqual(input.document);    
+    expect(client.street).toEqual(input.address.street);
+    expect(client.number).toEqual(input.address.number);
+    expect(client.complement).toEqual(input.address.complement);
+    expect(client.city).toEqual(input.address.city);
+    expect(client.state).toEqual(input.address.state);
+    expect(client.zipCode).toEqual(input.address.zipCode);
   });
 
   it("should find a client", async () => {
@@ -49,7 +64,15 @@ describe("ClientRepository test", () => {
       id: "1",
       name: "Client 1",
       email: "x@x.com",
-      address: "Address 1",
+      document: "Doc-1",
+      address: new Address({
+        street: "Street 1",
+        number: "Number 1",
+        complement: "Complement 1",
+        city: "City 1",
+        state: "State 1",
+        zipCode: "Zip 1",
+      }),
     };
 
     await facade.add(input);
@@ -60,6 +83,12 @@ describe("ClientRepository test", () => {
     expect(client.id).toEqual(input.id);
     expect(client.name).toEqual(input.name);
     expect(client.email).toEqual(input.email);    
-    expect(client.address).toEqual(input.address);
+    expect(client.document).toEqual(input.document);    
+    expect(client.address.street).toEqual(input.address.street);
+    expect(client.address.number).toEqual(input.address.number);
+    expect(client.address.complement).toEqual(input.address.complement);
+    expect(client.address.city).toEqual(input.address.city);
+    expect(client.address.state).toEqual(input.address.state);
+    expect(client.address.zipCode).toEqual(input.address.zipCode);
   });
 });

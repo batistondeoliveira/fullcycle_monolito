@@ -1,5 +1,5 @@
 import UseCaseInterface from "../../@shared/usecase/use-case.interface";
-import InvoiceFacadeInputDto, { FindInvoiceFacadeInputDto, FindInvoiceFacadeOutputDto } from "./invoice.facade.dto";
+import InvoiceFacadeInputDto, { FindInvoiceFacadeInputDto, FindInvoiceFacadeOutputDto, InvoiceFacadeOutputDto } from "./invoice.facade.dto";
 import InvoiceFacadeInterface from "./invoice.facade.interface";
 
 export interface UseCaseProps {
@@ -16,8 +16,25 @@ export default class InvoiceFacade implements InvoiceFacadeInterface {
     this._findUsecase = usecaseProps.findUsecase;
   }
 
-  async generate(input: InvoiceFacadeInputDto): Promise<void> {
-    await this._generateUsecase.execute(input);
+  async generate(input: InvoiceFacadeInputDto): Promise<InvoiceFacadeOutputDto> {
+    const usecase = await this._generateUsecase.execute(input);
+
+    return {
+      id: usecase.id,
+      name: usecase.name,
+      document: usecase.document,
+      street: usecase.street,
+      number: usecase.number,
+      complement: usecase.complement,
+      city: usecase.city,
+      state: usecase.state,
+      zipCode: usecase.zipCode,
+      items: usecase.items.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+      })),
+    };
   }
 
   async find(
