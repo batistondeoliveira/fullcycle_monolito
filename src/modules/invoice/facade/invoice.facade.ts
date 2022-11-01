@@ -1,5 +1,5 @@
 import UseCaseInterface from "../../@shared/usecase/use-case.interface";
-import InvoiceFacadeInputDto, { FindInvoiceFacadeInputDto, FindInvoiceFacadeOutputDto, InvoiceFacadeOutputDto } from "./invoice.facade.dto";
+import { InvoiceFacadeInputDto, FindInvoiceFacadeInputDto, FindInvoiceFacadeOutputDto, InvoiceFacadeOutputDto } from "./invoice.facade.dto";
 import InvoiceFacadeInterface from "./invoice.facade.interface";
 
 export interface UseCaseProps {
@@ -29,11 +29,7 @@ export default class InvoiceFacade implements InvoiceFacadeInterface {
       city: usecase.city,
       state: usecase.state,
       zipCode: usecase.zipCode,
-      items: usecase.items.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-      })),
+      items: usecase.items,
     };
   }
 

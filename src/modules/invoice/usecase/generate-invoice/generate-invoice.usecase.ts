@@ -47,10 +47,10 @@ export default class GenerateInvoiceUseCase {
       city: invoice.address.city,
       state: invoice.address.state,
       zipCode: invoice.address.zipCode,
-      items: invoice.items.map((items) => ({
-        id: items.id.id,
-        name: items.name,
-        price: items.price,
+      items: invoice.items.map((item) => ({
+        id: item.id.id,
+        name: item.name,
+        price: item.price,
       })),
       total: invoice.items.reduce((acc, item) => (acc + item.price), 0),
     };
