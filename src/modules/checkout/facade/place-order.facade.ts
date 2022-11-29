@@ -46,7 +46,14 @@ export default class PlaceOrderFacade implements PlaceOrderFacadeInterface {
       name: usecase.client.name,      
       email: usecase.client.email,
       document: usecase.client.document,
-      address: usecase.client.address,
+      address: {
+        street: usecase.client.address.street,
+        number: usecase.client.address.number,
+        complement: usecase.client.address.complement,
+        city: usecase.client.address.city,
+        state: usecase.client.address.state,
+        zipCode: usecase.client.address.zipCode,
+      },
       items: usecase.products.map((product: any) => ({
         id: product.id.id,        
         name: product.name,
