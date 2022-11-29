@@ -1,4 +1,4 @@
-export interface FindAllProductDto {
+export interface FindAllStoreCatalogDto {
   products: {
     id: string;
     name: string;
