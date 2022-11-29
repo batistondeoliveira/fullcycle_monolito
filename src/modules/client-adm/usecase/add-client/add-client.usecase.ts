@@ -1,3 +1,4 @@
+import Address from "../../../@shared/domain/value-object/address.value-object";
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import Client from "../../domain/client.entity";
 import ClientAdmGateway from "../../gateway/client-adm.gateway";
@@ -20,14 +21,21 @@ export default class AddClientUseCase {
     };
 
     const client = new Client(props);
-    this._clientRepository.add(client);
+    await this._clientRepository.add(client);
     
     return {
       id: client.id.id,
       name: client.name,
       email: client.email,
       document: client.document,
-      address: client.address, 
+      address: new Address({
+        street: client.address.street, 
+        number: client.address.number,
+        complement: client.address.complement,
+        city: client.address.city,
+        state: client.address.state,
+        zipCode: client.address.zipCode
+      }),
       createdAt: client.createdAt,
       updatedAt: client.updatedAt,
     };
