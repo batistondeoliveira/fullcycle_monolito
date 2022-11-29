@@ -1,4 +1,3 @@
-import Address from "../../../@shared/domain/value-object/address.value-object";
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
 import ClientAdmFacadeInterface from "../../../client-adm/facade/client-adm.facade.interface";
@@ -49,14 +48,15 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
     );
 
     const myClient = new Client({
-      id: new Id(client.id),
+      id: new Id(input.clientId),
       name: client.name,
       email: client.email,
       document: client.document,
       address: client.address,   
     });  
 
-    const order = new Order({
+    const order = new Order({  
+      id: new Id(input.id),
       client: myClient,
       products,
     });
@@ -87,7 +87,7 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
       : null
       
     payment.status === "approved" && order.approved();
-    this._repository.addOrder(order);
+    await this._repository.addOrder(order);
     
     return {
       id: order.id.id,
